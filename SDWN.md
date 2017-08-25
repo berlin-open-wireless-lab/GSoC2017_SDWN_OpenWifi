@@ -1,6 +1,6 @@
 # SDWN for ONOS/LEDE
 
-SDWN is short for Software-Defined Wireless Networking. This project comprises an SDWN control application running on top of an [ONOS](https://onosproject.org) SDN controller as well as an agent for [LEDE](https://ledeproject.org). The two communicate through an OpenFlow control channel. The agent provides the controller with information about about wifi access points and their associated clients. The controller offers the ability to centrally manage parameters of the wireless network and to monitor its state. For example, access points can be instructed to change their operating channel and clients can be forced to disconnect or banned from association altogether.
+SDWN is short for Software-Defined Wireless Networking. This project comprises an SDWN control application running on top of an [ONOS](https://onosproject.org) SDN controller as well as an agent for [LEDE](https://ledeproject.org). The two communicate through an OpenFlow control channel. The agent provides the controller with information about about wifi access points and their associated clients. The controller offers the ability to centrally manage parameters of the wireless network and to monitor its state. For example, access points can be instructed to change their operating channel and clients can be forced to disconnect or be banned from association altogether.
 
 ## Controller
 
