@@ -42,6 +42,25 @@
 
 <h2 id="bootstrapping">Bootstrapping</h2>
 
+<p>This section explains how to integrate SDWN with OpenWifi. It assumes you have both the SDWN and OpenWifi controllers running. Since this mechanism uses the OpenWifi REST API, the SDWN controller must be able to reach it.</p>
+
+<ol>
+  <li>Build and install the OpenWifi integration app for SDWN. The <a href="">SDWN agent</a> repository contains the source code and instructions on how to build and deploy SDWN applications.</li>
+  <li>
+    <p>on the ONOS shell, register the SDWN controller with OpenWifi: <code class="highlighter-rouge">openwifi-register &lt;OpenWifi REST API URL&gt; &lt;SDWN ADDRESS&gt; &lt;SDWN PORT&gt; &lt;NAME&gt; "wlanflow - 1-1" "opkg list-installed | grep wlanflow"</code>, were:</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">&lt;OpenWifi REST API URL&gt;</code> is the URL of the OpenWifi controller’s REST API in the following format: <code class="highlighter-rouge">http://&lt;address/hostname&gt;:&lt;port&gt;/&lt;path to REST API&gt;</code>.</li>
+      <li><code class="highlighter-rouge">&lt;SDWN ADDRESS&gt;</code> is the IP address of the ONOS instance where the SDWN controller is running. This option is relevant to the LEDE boxes in the network, so make sure they can reach this address.</li>
+      <li><code class="highlighter-rouge">&lt;SDWN PORT&gt;</code> is ONOS’ south-bound OpenFlow listening port (default: 6633).</li>
+      <li><code class="highlighter-rouge">&lt;NAME&gt;</code> is an arbitrary name which OpenWifi uses to distinguish registered services.</li>
+    </ul>
+
+    <p>The final two arguments are for OpenWifi’s capability mechanism so it can decide whether a LEDE node is able to use the service that gets registered. The second part, <code class="highlighter-rouge">opkg list-installed | grep wlanflow</code> gets executed on the LEDE shell. If its output matches the first part (<code class="highlighter-rouge">"wlanflow - 1-1"</code> in our case) OpenWifi  knows that the node can handle the service (SDWN in our case). Then, OpenWifi installs the relevant configuration options into the node’s UCI configuration. On a LEDE node where wlanflow is installed, this will trigger the daemon to reload the just-updated configuration file and connect to the SDWN controller.</p>
+  </li>
+</ol>
+
+<p>You can query which services are registered with OpenWifi from the ONOS shell by executing <code class="highlighter-rouge">openwifi-services</code> and remove a registration with <code class="highlighter-rouge">openwifi-unregsiter</code>.</p>
 
 
       <footer class="site-footer">
