@@ -1,11 +1,28 @@
 # Google Summer of Code 2017 - OpenWifi & SDWN
 
-This is the documentation of two projects that were realized for Freifunk during Google Summer of Code 2017: [SDWN](SDWN.md) and [OpenWifi](OpenWifi.md). Together they form a centralized management system for Wifi deployments.
+This is the documentation of two projects that were realized for Freifunk during Google Summer of Code 2017: [SDWN](SDWN.md) and [OpenWifi](https://berlin-open-wireless-lab.github.io/OpenWifiCore/#api). Together they form a centralized management system for Wifi deployments.
 
-- OpenWifi does ...
+- OpenWifi manages the configuration of LEDE/OpenWRT nodes, it also provides an API to be used by external application to make changes to configurations, it also provides automatic node detection/registration
 - SDWN keeps track of wireless resources and actors in the network such as access points, wireless clients, and their communication parameters.
 
 For detailed documentation of both OpenWifi and SDWN, please refer to the documentation on their respective pages and in their source repositories. This page mainly describes how the two interact to realize a comprehensive monitoring and configuration tool of the wireless network.
+
+## Getting the automatic node detection to work
+
+For OpenWifi to be able to automatically detect new nodes the nodes need to have the [openwifi-boot-notifier](https://github.com/berlin-open-wireless-lab/openwifi-feed/tree/master/boot-notifier) installed. To do so please add this line to your feeds.conf in your build root:
+
+    src-git openwifi https://github.com/berlin-open-wireless-lab/openwifi-feed.git
+
+and update your feeds and install the package:
+
+    ./scripts/feeds update
+    ./scripts/feeds install openwifi-boot-notifier-umdns
+
+Now you can select the package via `make menuconfig` in Administration->OpenWifi.
+
+This notifier packages uses either a preconfigured server (in /etc/config/openwifi), a special dns entry or mdns to detect and register to the OpenWifi server application.
+
+SDWN uses the [service api](https://berlin-open-wireless-lab.github.io/OpenWifiCore/#services) to interact with OpenWifi.
 
 ## Bootstrapping
 
